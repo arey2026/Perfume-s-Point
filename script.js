@@ -294,16 +294,17 @@ document.getElementById('checkout-button').addEventListener('click', () => {
     if (cart.length === 0) return alert('El carrito está vacío.');
 
     let total = 0;
-    let message = 'Hola! Quisiera hacer el siguiente pedido:%0A';
+    const orderLines = ['Hola! Quisiera hacer el siguiente pedido:', ''];
 
     cart.forEach(item => {
         const prod = products[item.index];
         const linePrice = Math.round(item.price);
         total += linePrice * item.qty;
-        message += `- ${item.qty} x ${prod.name} (${item.presentation}) — ${formatPriceText(linePrice)}%0A`;
+        orderLines.push(`${item.qty} x ${prod.name} (${item.presentation}) - ${formatPriceText(linePrice)}`);
     });
 
-    message += `%0ATotal: ${formatPriceText(Math.round(total))}`;
+    orderLines.push('', `Total: ${formatPriceText(Math.round(total))}`);
+    const message = orderLines.join('\n');
 
     const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
     window.open(url, '_blank');

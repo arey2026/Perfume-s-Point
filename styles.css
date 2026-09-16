@@ -318,6 +318,10 @@ a {
     color: #f7f4ef;
 }
 
+.decant-experience > * {
+    min-width: 0;
+}
+
 .decant-experience::before {
     position: absolute;
     top: 0;
@@ -776,6 +780,14 @@ section {
 }
 
 @media (max-width: 768px) {
+    .decant-experience::before {
+        display: none;
+    }
+
+    .decant-experience h2 {
+        letter-spacing: 0;
+    }
+
     .image-preview-label {
         opacity: 1;
     }
