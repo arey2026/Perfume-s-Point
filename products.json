@@ -360,7 +360,7 @@
         "image":  "images/c8e339fd-7b47-45ab-b45f-6fca2bf0095e.jpg"
     },
     {
-        "name":  "C.H. GOOD GIRL VERY ELIXIR EDP",
+        "name":  "CAROLINA HERRERA GOOD GIRL VERY ELIXIR EDP",
         "category":  "Femeninos",
         "description":  "80 ml",
         "price_full":  "4370",
@@ -378,7 +378,7 @@
         "image":  "images/212 VIP ROSE 125ML EDP.jpeg"
     },
     {
-        "name":  "C.H VERY GOOD GIRL EDP",
+        "name":  "CAROLINA HERRERA VERY GOOD GIRL EDP",
         "category":  "Femeninos",
         "description":  "75 ml",
         "price_full":  "3999",
@@ -531,19 +531,19 @@
         "image":  "images/AZZARO MOST WANTED INTENSE 100ML.jpg"
     },
     {
-        "name":  "LA BOMBA C.HERRERA EDP",
+        "name":  "LA BOMBA CAROLINA HERRERA EDP",
         "category":  "Femeninos",
         "description":  "80 ml",
-        "price_full":  "4515",
-        "price_5ml":  "365",
-        "price_10ml":  "715",
+        "price_full":  "4595",
+        "price_5ml":  "",
+        "price_10ml":  "",
         "image":  "images/LA BOMBA C.HERRERA 80ML EDP.jpeg"
     },
     {
         "name":  "POLO BLACK MEN EDT",
         "category":  "Masculinos",
         "description":  "200 ml",
-        "price_full":  "3685",
+        "price_full":  "3695",
         "price_5ml":  "",
         "price_10ml":  "",
         "image":  "images/POLO BLACK 200ML 6.7 FL. M EDT.jpg"
@@ -561,7 +561,7 @@
         "name":  "VERSACE EROS EDP",
         "category":  "Masculinos",
         "description":  "100 ml",
-        "price_full":  "2850",
+        "price_full":  "2895",
         "price_5ml":  "",
         "price_10ml":  "",
         "image":  "images/VERSACE EROS 100ML EDP.jpg"
