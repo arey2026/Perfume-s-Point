@@ -24,7 +24,7 @@ const usableImage = async image => {
     return ['.jpg', '.jpeg', '.png'].includes(extension) ? fullPath : null;
 };
 
-doc.fillColor('#171717').font('Helvetica-Bold').fontSize(24).text("Perfume's Point", { align: 'center' });
+doc.fillColor('#171717').font('Helvetica-Bold').fontSize(24).text('AJRO Perfumes', { align: 'center' });
 doc.moveDown(0.4).fillColor('#555555').font('Helvetica').fontSize(12)
     .text('Catálogo completo de perfumes', { align: 'center' });
 doc.moveDown(0.3).fontSize(10).text(`${products.length} productos disponibles`, { align: 'center' });
@@ -70,7 +70,7 @@ const range = doc.bufferedPageRange();
 for (let page = range.start; page < range.start + range.count; page += 1) {
     doc.switchToPage(page);
     doc.fillColor('#888888').font('Helvetica').fontSize(8)
-        .text(`Perfume's Point  |  Página ${page + 1} de ${range.count}`, 42, 750, { align: 'center', width: 528 });
+        .text(`AJRO Perfumes  |  Página ${page + 1} de ${range.count}`, 42, 750, { align: 'center', width: 528 });
 }
 
 generateCatalog().then(() => {
