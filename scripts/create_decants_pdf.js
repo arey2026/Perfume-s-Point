@@ -6,22 +6,13 @@ const sharp = require('sharp');
 const root = path.resolve(__dirname, '..');
 const productsJson = fs.readFileSync(path.join(root, 'products.json'), 'utf8').replace(/^\uFEFF/, '');
 const products = JSON.parse(productsJson);
-const withDecants = products.filter(product => {
-    const price5 = Number(String(product.price_5ml || '').replace(/[^0-9.-]/g, '')) || 0;
-    const price10 = Number(String(product.price_10ml || '').replace(/[^0-9.-]/g, '')) || 0;
-    return price5 > 0 || price10 > 0;
-});
-const withoutDecants = products.filter(product => {
-    const price5 = Number(String(product.price_5ml || '').replace(/[^0-9.-]/g, '')) || 0;
-    const price10 = Number(String(product.price_10ml || '').replace(/[^0-9.-]/g, '')) || 0;
-    return price5 <= 0 && price10 <= 0;
-});
 
-const output = path.join(root, 'catalogo-decants.pdf');
+const output = path.join(root, 'catalogo-perfumes.pdf');
 const doc = new PDFDocument({ size: 'LETTER', margin: 42, bufferPages: true });
 doc.pipe(fs.createWriteStream(output));
 
-const money = value => value ? `L. ${Number(value).toLocaleString('en-US')}` : 'No disponible';
+const priceValue = value => Number(String(value || '').replace(/[^0-9.-]/g, '')) || 0;
+const money = value => priceValue(value) ? `L. ${priceValue(value).toLocaleString('en-US')}` : 'No disponible';
 const usableImage = async image => {
     if (!image) return null;
     const extension = path.extname(image).toLowerCase();
@@ -39,14 +30,11 @@ doc.moveDown(0.4).fillColor('#555555').font('Helvetica').fontSize(12)
 doc.moveDown(0.3).fontSize(10).text(`${products.length} productos disponibles`, { align: 'center' });
 doc.moveDown(1.2);
 
-async function addSection(title, productList) {
-    doc.fillColor('#171717').font('Helvetica-Bold').fontSize(16)
-        .text(title, { align: 'left' });
-    doc.moveDown(0.5);
-
-    for (const product of productList) {
-        const fullPrice = Number(String(product.price_full || '').replace(/[^0-9.-]/g, '')) || 0;
-        if (!fullPrice) continue;
+async function addProducts() {
+    for (const product of products) {
+        const fullPrice = priceValue(product.price_full ?? product.price);
+        const price5 = priceValue(product.price_5ml);
+        const price10 = priceValue(product.price_10ml);
         
         const image = await usableImage(product.image);
         const cardHeight = 140;
@@ -66,26 +54,16 @@ async function addSection(title, productList) {
         doc.fillColor('#666666').font('Helvetica').fontSize(9)
             .text((product.category || '') + ' | ' + (product.description || ''), textX, top + 38, { width: 360 });
         doc.fillColor('#222222').font('Helvetica-Bold').fontSize(11)
-            .text(`Bote sellado: ${money(fullPrice)}`, textX, top + 60, { width: 360 });
+            .text(`Bote sellado: ${fullPrice ? money(fullPrice) : 'No disponible'}`, textX, top + 60, { width: 360 });
 
-        const price5 = Number(String(product.price_5ml || '').replace(/[^0-9.-]/g, '')) || 0;
-        const price10 = Number(String(product.price_10ml || '').replace(/[^0-9.-]/g, '')) || 0;
-        if (price5 > 0 || price10 > 0) {
-            let decantText = 'Decants: ';
-            if (price5 > 0) decantText += `5ml ${money(price5)}`;
-            if (price5 > 0 && price10 > 0) decantText += ' | ';
-            if (price10 > 0) decantText += `10ml ${money(price10)}`;
-            doc.fillColor('#555555').font('Helvetica').fontSize(9)
-                .text(decantText, textX, top + 80);
-        }
+        doc.fillColor('#555555').font('Helvetica').fontSize(9)
+            .text(`Decant 5 ml: ${money(price5)}  |  Decant 10 ml: ${money(price10)}`, textX, top + 80);
         doc.y = top + cardHeight + 12;
     }
-    doc.moveDown(0.8);
 }
 
 async function generateCatalog() {
-    await addSection('✓ PERFUMES CON DECANTS', withDecants);
-    await addSection('PERFUMES DISPONIBLES (Sin decants)', withoutDecants);
+    await addProducts();
 }
 
 const range = doc.bufferedPageRange();
@@ -97,5 +75,5 @@ for (let page = range.start; page < range.start + range.count; page += 1) {
 
 generateCatalog().then(() => {
     doc.end();
-    doc.on('end', () => console.log(`PDF generado: ${output}\nProductos totales: ${products.length} (${withDecants.length} con decants)`));
+    doc.on('end', () => console.log(`PDF generado: ${output}\nProductos incluidos: ${products.length}`));
 });

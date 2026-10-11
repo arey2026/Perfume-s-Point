@@ -39,12 +39,6 @@ a {
     z-index: 10;
 }
 
-.brand-group {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-}
-
 .logo {
     font-size: 22px;
     font-weight: bold;
@@ -53,12 +47,6 @@ a {
 
 .logo span {
     font-weight: normal;
-}
-
-.header-socials {
-    display: flex;
-    align-items: center;
-    gap: 8px;
 }
 
 .navbar nav {
@@ -73,81 +61,6 @@ a {
 
 .navbar nav a:hover {
     opacity: 0.6;
-}
-
-.social-links {
-    display: flex;
-    justify-content: center;
-    gap: 14px;
-    flex-wrap: wrap;
-    margin: 0 auto 24px;
-}
-
-.social-link {
-    appearance: none;
-    border: 1px solid rgba(255, 255, 255, 0.35);
-    background: transparent;
-    color: #ffffff;
-    border-radius: 50%;
-    width: 52px;
-    height: 52px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0;
-    transition: 0.25s ease;
-    cursor: pointer;
-}
-
-.social-link svg {
-    width: 20px;
-    height: 20px;
-    fill: none;
-    stroke: currentColor;
-    stroke-width: 1.8;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-}
-
-.social-link svg path,
-.social-link svg circle,
-.social-link svg rect {
-    vector-effect: non-scaling-stroke;
-}
-
-.social-link:hover {
-    background: #ffffff;
-    color: #111111;
-}
-
-.social-link:focus-visible {
-    outline: 2px solid rgba(255, 255, 255, 0.7);
-    outline-offset: 3px;
-}
-
-.navbar .social-link {
-    width: 42px;
-    height: 42px;
-}
-
-@media (max-width: 920px) {
-    .navbar {
-        flex-wrap: wrap;
-        gap: 18px;
-    }
-
-    .brand-group {
-        width: 100%;
-        justify-content: space-between;
-    }
-
-    .navbar nav {
-        order: 3;
-        width: 100%;
-        justify-content: center;
-        flex-wrap: wrap;
-        gap: 16px 20px;
-    }
 }
 
 
@@ -403,10 +316,6 @@ a {
     padding-bottom: 90px;
     background: #121212;
     color: #f7f4ef;
-}
-
-.decant-experience > * {
-    min-width: 0;
 }
 
 .decant-experience::before {
@@ -719,6 +628,23 @@ section {
     font-size: 45px;
 }
 
+.catalog-download {
+    display: inline-block;
+    margin-top: 22px;
+    padding: 11px 18px;
+    border: 1px solid #c59a64;
+    border-radius: 4px;
+    color: #f1d7b5;
+    font-size: 13px;
+    font-weight: 600;
+    transition: background 0.2s ease, color 0.2s ease;
+}
+
+.catalog-download:hover {
+    background: #c59a64;
+    color: #111;
+}
+
 
 /* =========================
    CATEGORÍAS
@@ -867,14 +793,6 @@ section {
 }
 
 @media (max-width: 768px) {
-    .decant-experience::before {
-        display: none;
-    }
-
-    .decant-experience h2 {
-        letter-spacing: 0;
-    }
-
     .image-preview-label {
         opacity: 1;
     }

@@ -32,15 +32,13 @@ function renderProducts() {
         .filter(({ product }) => {
             const matchesCategory = currentFilter === 'all' || product.category === currentFilter;
             const searchableText = `${product.name || ''} ${product.description || ''}`.toLowerCase();
-            const hasFull = formatPriceVal(product.price_full ?? product.price) > 0;
             const has5ml = formatPriceVal(product.price_5ml) > 0;
             const has10ml = formatPriceVal(product.price_10ml) > 0;
-            const hasPrice = hasFull || has5ml || has10ml;
             const hasDecant = decantFilter === 'all'
                 || (decantFilter === 'available' && (has5ml || has10ml))
                 || (decantFilter === '5ml' && has5ml)
                 || (decantFilter === '10ml' && has10ml);
-            return matchesCategory && searchableText.includes(searchTerm) && hasPrice && hasDecant;
+            return matchesCategory && searchableText.includes(searchTerm) && hasDecant;
         });
 
     if (priceSort !== 'default') {
@@ -294,17 +292,16 @@ document.getElementById('checkout-button').addEventListener('click', () => {
     if (cart.length === 0) return alert('El carrito está vacío.');
 
     let total = 0;
-    const orderLines = ['Hola! Quisiera hacer el siguiente pedido:', ''];
+    let message = 'Hola! Quisiera hacer el siguiente pedido:%0A';
 
     cart.forEach(item => {
         const prod = products[item.index];
         const linePrice = Math.round(item.price);
         total += linePrice * item.qty;
-        orderLines.push(`${item.qty} x ${prod.name} (${item.presentation}) - ${formatPriceText(linePrice)}`);
+        message += `- ${item.qty} x ${prod.name} (${item.presentation}) — ${formatPriceText(linePrice)}%0A`;
     });
 
-    orderLines.push('', `Total: ${formatPriceText(Math.round(total))}`);
-    const message = orderLines.join('\n');
+    message += `%0ATotal: ${formatPriceText(Math.round(total))}`;
 
     const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
     window.open(url, '_blank');
